@@ -142,3 +142,5 @@
   (setq global-mode-string
 	(remove '(:eval (karma-emacs-mode-line-string))
 		global-mode-string)))
+
+(provide 'karma-emacs)

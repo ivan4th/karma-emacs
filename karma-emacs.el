@@ -49,16 +49,16 @@
 (defun karma-emacs-mode-line-string ()
   (if (not karma-emacs-active-p)
       ""
-    (let ((s (format "(%d/%d%s%s%s)"
+    (let ((s (format "(%d%s/%d%s%s)"
                      (+ karma-emacs-run-success karma-emacs-run-failed)
+                     (if karma-emacs-running-p "…" "")
                      karma-emacs-run-total
                      (if (plusp karma-emacs-run-failed)
                          (format " %sF" karma-emacs-run-failed)
                        "")
                      (if (plusp karma-emacs-run-skipped)
                          (format " %sS" karma-emacs-run-skipped)
-                       "")
-                     (if karma-emacs-running-p "…" "")))
+                       "")))
           (map (make-sparse-keymap)))
       (define-key map (vector 'mode-line 'mouse-2)
         `(lambda (e)

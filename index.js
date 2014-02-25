@@ -55,7 +55,7 @@ var EmacsReporter = function(baseReporterDecorator, config, logger, helper, form
       path: "/karma/post",
       method: 'POST',
       headers: {
-        "Content-Length": body.length, //Buffer.byteLength(body, "utf8"),
+        "Content-Length": Buffer.byteLength(body, "utf8"),
         "Content-Type": "application/json"
       }
     }, function(res) {

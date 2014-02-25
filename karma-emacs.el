@@ -79,12 +79,6 @@
                            s)
       s)))
 
-;; (setq httpd-root "/var/www")
-(setf httpd-port 8008
-      httpd-serve-files nil)
-(httpd-start)
-;; (httpd-stop)
-
 (defun karma-emacs-clear-logs ()
   (with-current-buffer (karma-emacs-buffer)
     (erase-buffer)))
@@ -131,11 +125,10 @@
              ;; '((ok . t))
              ))))
 
-;; (json-encode '((a . "3")))
-
 ;; TBD: global mode
 (defun karma-emacs-start ()
   (interactive)
+  (httpd-start)
   (add-to-list 'global-mode-string
                '(:eval (karma-emacs-mode-line-string)) t))
 
@@ -144,5 +137,10 @@
   (setq global-mode-string
 	(remove '(:eval (karma-emacs-mode-line-string))
 		global-mode-string)))
+
+;; (setq httpd-root "/var/www")
+;; (setf httpd-port 8008
+;;       httpd-serve-files nil)
+;; (httpd-stop)
 
 (provide 'karma-emacs)

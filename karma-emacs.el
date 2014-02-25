@@ -83,7 +83,7 @@
 (setf httpd-port 8008
       httpd-serve-files nil)
 (httpd-start)
-(httpd-stop)
+;; (httpd-stop)
 
 (defun karma-emacs-clear-logs ()
   (with-current-buffer (karma-emacs-buffer)
@@ -96,13 +96,15 @@
                       (type (aref log-item 1))
                       (message (aref log-item 2)))
                   (goto-char (point-max))
-                  (let ((text (format "%s: %s\n" type message))
-                        (face (cond ((string= type "TESTFAIL") 'karma-testfail)
-                                    ((string= type "LOG") 'karma-log)
-                                    (t nil))))
-                    (insert (if face
-                                (propertize text 'face face)
-                              text)))))))
+                  (let ((text (format "%s: %s\n" type message)))
+                    (cond ((string= type "TESTFAIL")
+                           (add-text-properties
+                            0 (or (cl-position 10 text) (length text))
+                            '(face karma-testfail) text))
+                          ((string= type "LOG")
+                           (add-text-properties
+                            0 (length text) '(face karma-log) text)))
+                    (insert text))))))
 
 (defservlet karma/post text/plain (path query req)
   ;; (message "content: %S" content)
